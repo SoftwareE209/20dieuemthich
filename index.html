@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20 điều em thích 💕</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(135deg,#fff0f6,#ffe4ec);color:#4b2633}
+.container{max-width:900px;margin:auto;padding:28px 16px 60px}header{text-align:center;margin-bottom:24px}h1{margin:0;color:#d6336c;font-size:clamp(28px,6vw,46px)}header p{margin:8px 0;color:#875466}
+.card{background:#fff;border:1px solid #ffd0de;border-radius:20px;padding:18px;margin:14px 0;box-shadow:0 8px 24px #d6336c12}
+.title{font-weight:800;color:#c2255c;margin-bottom:12px}.row{display:flex;gap:8px;margin:8px 0}.row input{flex:1;padding:11px 13px;border:1px solid #f0b8ca;border-radius:12px;font-size:15px;outline:none}.row input:focus{border-color:#d6336c;box-shadow:0 0 0 3px #d6336c18}
+button{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}.add{background:#fff0f6;color:#c2255c}.remove{background:#ffe3ea;color:#c2255c;padding:8px 11px}.actions{position:sticky;bottom:12px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:#ffffffdd;backdrop-filter:blur(8px);padding:12px;border-radius:18px;box-shadow:0 8px 30px #0001}.primary{background:#d6336c;color:#fff}.secondary{background:#ffe8ef;color:#a61e4d}
+.result{display:none;margin:20px 0;padding:24px;border-radius:22px;background:#fff;border:2px dashed #f06595;text-align:center}.result.show{display:block}.result .emoji{font-size:42px}.result h2{color:#d6336c;margin:8px}.result .answer{font-size:22px;font-weight:800}.result small{color:#875466}
+@media(max-width:560px){.row{align-items:stretch}.remove{padding:8px}.actions button{flex:1}}
+</style>
+</head>
+<body>
+<div class="container">
+<header><h1>20 điều em thích 💕</h1><p>Điền những điều em thích để anh luôn biết cách làm em vui.</p></header>
+<div id="form"></div>
+<div id="result" class="result"><div class="emoji">🎲💗</div><small>Anh đã random được...</small><h2 id="resultTitle"></h2><div class="answer" id="resultAnswer"></div></div>
+<div class="actions">
+<button class="primary" onclick="save()">💾 Lưu lại</button>
+<button class="secondary" onclick="randomPick()">🎲 Random</button>
+<button class="secondary" onclick="clearAll()">🗑️ Xóa tất cả</button>
+</div>
+</div>
+<script>
+const cats=[
+'Món quà em thích','Loài hoa em thích','Món ăn em thích','Đồ uống em thích','Món ăn vặt / món ngọt',
+'Nơi em muốn đi','Địa điểm muốn du lịch trong nước','Bộ phim / thể loại phim em thích','Bài hát / ca sĩ em thích','Phong cách / món đồ em thích',
+'Quán cà phê / nhà hàng em thích','Một buổi hẹn em muốn có','Điều em muốn làm cùng anh','Món đồ nhỏ khiến em vui','Cách em thích được quan tâm',
+'Điều khiến em vui nhất','Một điều em muốn anh nhớ','Một điều em đang mong muốn','Điều đặc biệt nhất em muốn anh biết','Một điều bất ngờ em muốn nhận'
+];
+const key='love_20_things_v3';
+const form=document.getElementById('form');
+function esc(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function addRow(i,val=''){const box=document.querySelector('#rows-'+i);const row=document.createElement('div');row.className='row';row.innerHTML='<input type="text" placeholder="Nhập điều em thích..." value="'+esc(val)+'"><button class="remove" type="button" onclick="this.parentElement.remove()">✕</button>';box.appendChild(row)}
+function build(){form.innerHTML=cats.map((c,i)=>'<section class="card"><div class="title">'+String(i+1).padStart(2,'0')+'. '+c+'</div><div id="rows-'+i+'"></div><button class="add" type="button" onclick="addRow('+i+')">＋ Thêm dòng</button></section>').join('');let data=[];try{data=JSON.parse(localStorage.getItem(key)||'[]')}catch{}cats.forEach((_,i)=>(data[i]||['']).forEach(v=>addRow(i,v)))}
+function collect(){return cats.map((_,i)=>[...document.querySelectorAll('#rows-'+i+' input')].map(x=>x.value.trim()).filter(Boolean))}
+function save(){localStorage.setItem(key,JSON.stringify(collect()));alert('Đã lưu trên thiết bị này 💗')}
+function randomPick(){const data=collect();const choices=[];data.forEach((arr,i)=>arr.forEach(v=>choices.push({title:cats[i],answer:v})));if(!choices.length){alert('Em hãy điền ít nhất một điều trước nhé 💕');return}const x=choices[Math.floor(Math.random()*choices.length)];document.getElementById('resultTitle').textContent=x.title;document.getElementById('resultAnswer').textContent=x.answer;document.getElementById('result').classList.add('show');document.getElementById('result').scrollIntoView({behavior:'smooth',block:'center'})}
+function clearAll(){if(!confirm('Xóa toàn bộ nội dung?'))return;localStorage.removeItem(key);build();document.getElementById('result').classList.remove('show')}
+build();
+</script>
+</body>
+</html>
