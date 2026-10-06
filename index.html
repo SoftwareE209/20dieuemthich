@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>20 điều em thích 💕</title>
+<title>8 điều em thích 💕</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(135deg,#fff0f6,#ffe4ec);color:#4b2633}
 .container{max-width:900px;margin:auto;padding:28px 16px 60px}header{text-align:center;margin-bottom:24px}h1{margin:0;color:#d6336c;font-size:clamp(28px,6vw,46px)}header p{margin:8px 0;color:#875466}
@@ -16,7 +16,7 @@ button{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:poin
 </head>
 <body>
 <div class="container">
-<header><h1>20 điều em thích 💕</h1><p>Điền những điều em thích để anh luôn biết cách làm em vui.</p></header>
+<header><h1>8 điều em thích 💕</h1><p>Điền những điều em thích để anh luôn biết cách làm em vui.</p></header>
 <div id="form"></div>
 <div id="result" class="result"><div class="emoji">🎲💗</div><small>Anh đã random được...</small><h2 id="resultTitle"></h2><div class="answer" id="resultAnswer"></div></div>
 <div class="actions">
@@ -27,12 +27,16 @@ button{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:poin
 </div>
 <script>
 const cats=[
-'Món quà em thích','Loài hoa em thích','Món ăn em thích','Đồ uống em thích','Món ăn vặt / món ngọt',
-'Nơi em muốn đi','Địa điểm muốn du lịch trong nước','Bộ phim / thể loại phim em thích','Bài hát / ca sĩ em thích','Phong cách / món đồ em thích',
-'Quán cà phê / nhà hàng em thích','Một buổi hẹn em muốn có','Điều em muốn làm cùng anh','Món đồ nhỏ khiến em vui','Cách em thích được quan tâm',
-'Điều khiến em vui nhất','Một điều em muốn anh nhớ','Một điều em đang mong muốn','Điều đặc biệt nhất em muốn anh biết','Một điều bất ngờ em muốn nhận'
+'Món quà em thích',
+'Loài hoa em thích',
+'Món ăn em thích',
+'Địa điểm muốn du lịch trong nước',
+'Một buổi hẹn em muốn có',
+'Điều em muốn làm cùng anh',
+'Điều đặc biệt nhất em muốn anh biết',
+'Một điều bất ngờ em muốn nhận'
 ];
-const key='love_20_things_v3';
+const key='love_20_things_v4';
 const form=document.getElementById('form');
 function esc(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function addRow(i,val=''){const box=document.querySelector('#rows-'+i);const row=document.createElement('div');row.className='row';row.innerHTML='<input type="text" placeholder="Nhập điều em thích..." value="'+esc(val)+'"><button class="remove" type="button" onclick="this.parentElement.remove()">✕</button>';box.appendChild(row)}
